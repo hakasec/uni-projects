@@ -1,0 +1,10 @@
+Label {
+    background-color: white;
+    border-bottom-width: 1;
+    border-bottom-color: gray;
+}
+
+ActivityIndicator {
+    margin-left: 10;
+    margin-right: 10;
+}

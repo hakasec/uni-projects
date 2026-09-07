@@ -1,0 +1,6 @@
+node_modules/
+hooks/
+platforms/
+
+# ignore compiled js files
+src/**/*.js
