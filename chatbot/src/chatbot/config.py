@@ -2,9 +2,10 @@
 """ Configuration classes and global_config. """
 
 import json
+import os
 from os import path
 
-from frozen import FrozenClass
+from .frozen import FrozenClass
 
 
 class ConfigDict(FrozenClass):
@@ -59,4 +60,4 @@ class Configuration(ConfigDict):
 
 # global_config is the global configuration for the file
 global_config = Configuration(
-    path.join(path.dirname(__file__), "config.json"))
+    os.environ.get("CHATBOT_CONFIG", path.join(os.getcwd(), "config.json")))

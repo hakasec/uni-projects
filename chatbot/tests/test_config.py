@@ -3,15 +3,15 @@
 import unittest
 import os.path as path
 
-from frozen import FrozenException
-from config import Configuration
+from chatbot.config import Configuration
+from chatbot.frozen import FrozenException
 
 
 class ConfigurationTestCase(unittest.TestCase):
 
     def setUp(self):
         dirname = path.dirname(__file__)
-        self.config_file = path.join(dirname, "config.example.json")
+        self.config_file = path.join(dirname, "..", "config.example.json")
         self.config = Configuration(self.config_file)
 
     def test_mutation(self):

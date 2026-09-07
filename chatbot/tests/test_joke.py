@@ -2,7 +2,7 @@
 
 import unittest
 
-from .joke import JokeService
+from chatbot.handlers.joke import JokeService
 
 
 class JokeServiceTestCase(unittest.TestCase):

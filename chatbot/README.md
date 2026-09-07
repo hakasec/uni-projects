@@ -9,6 +9,8 @@ To install this for Codio, create a new Python 3 project and install the `python
 
 You can install all requirements by running `sudo pip3 install -r requirements.txt`
 
+With the repository root as the current directory, you can run the bot using `PYTHONPATH=src python -m chatbot`.
+
 **It is recommended to use virtualenv and create your own python3.5 environment**
 
 To use datastore features, you may need to install it locally; this can be done using the following command `sudo apt-get install redis-server`.

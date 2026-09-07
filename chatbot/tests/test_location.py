@@ -2,7 +2,7 @@
 
 import unittest
 
-from .location import LocationService
+from chatbot.handlers.location import LocationService
 
 
 class LocationServiceTestCase(unittest.TestCase):

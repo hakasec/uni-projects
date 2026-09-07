@@ -2,6 +2,7 @@
 """ Discord bot implementation. """
 
 import json
+import os
 from datetime import datetime
 
 import discord
@@ -26,7 +27,9 @@ class DiscordBot(ChatBot):
         async def on_message(message):
             await self._handle_message(message)
 
-        self._interpreter = Interpreter.load("./training/models/current/nlu")
+        model_path = os.path.join(
+            os.getcwd(), "training", "models", "current", "nlu")
+        self._interpreter = Interpreter.load(model_path)
         self.client.run(self.config.token)
 
     async def _ready(self):

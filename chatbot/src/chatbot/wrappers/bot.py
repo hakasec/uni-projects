@@ -1,14 +1,9 @@
 # pylint: disable=C0413,C0111
 """ ChatBot base class. """
 
-import sys
-import os
-# so we can access ../config.py
-sys.path.insert(0, os.path.abspath('..'))
-
-from config import ConfigDict
-from datastore import global_datastore
-from handlers import global_services
+from ..config import ConfigDict
+from ..datastore import global_datastore
+from ..handlers import global_services
 
 
 class ChatBot(object):

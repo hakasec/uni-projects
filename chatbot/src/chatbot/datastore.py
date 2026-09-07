@@ -2,7 +2,7 @@
 """ All things redis related. """
 import redis
 
-from config import global_config
+from .config import global_config
 
 
 

@@ -9,7 +9,7 @@ node {
                                       variable: 'FILE')]) {
                     sh 'mv $FILE config.json'
                     sh 'pip install --user -r requirements.txt'
-                    sh 'python -m unittest discover -p "*_test.py"'               
+                    sh 'PYTHONPATH=src python -m unittest discover -s tests -p "test_*.py"'
                 }
             }
         }

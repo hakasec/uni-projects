@@ -1,11 +1,7 @@
 # pylint: disable=C0413,C0103
 """ Service base clase and global_services. """
 
-import sys
-import os
-sys.path.insert(0, os.path.abspath(".."))
-
-from config import ConfigDict, global_config
+from ..config import ConfigDict, global_config
 
 
 global_services = {}

@@ -1,8 +1,8 @@
 # pylint: disable=C0103
 """ Discord stuff. """
 
-from wrappers import DiscordBot
-from config import global_config
+from .config import global_config
+from .wrappers import DiscordBot
 
 
 def main():

@@ -1,7 +1,7 @@
 # pylint: disable=C0414,C0111,W0104
 import unittest
 
-from datastore import global_datastore
+from chatbot.datastore import global_datastore
 
 
 class DataStoreTestCase(unittest.TestCase):

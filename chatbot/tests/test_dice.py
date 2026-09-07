@@ -3,7 +3,7 @@
 import unittest
 import math
 
-from .dice import DiceService
+from chatbot.handlers.dice import DiceService
 
 
 class DiceServiceTestCase(unittest.TestCase):
