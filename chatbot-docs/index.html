@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>chatbot by soperd</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">chatbot</h1>
+      <h2 class="project-tagline">Year 1 Project</h2>
+      <a href="https://github.coventry.ac.uk/soperd/chatbot" class="btn">View on GitHub</a>
+    </section>
+
+    <section class="main-content">
+      <h2>
+<a id="introduction" class="anchor" href="#introduction" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Introduction</h2>
+<p>This is a reflective piece on my Year 1 university group project. Please view the code <a href="https://github.coventry.ac.uk/soperd/chatbot">here</a>.</p>
+<p>The project is a chatbot written in Python 3 primarily for use with Discord. Current features include:</p>
+<ul>
+<li>Discord integration with <a href="https://github.com/Rapptz/discord.py">Discord.py</a>!</li>
+<li>Some natural language understanding with <a href="https://rasa.com/">RasaNLU</a>!</li>
+<li>Weather forecast integration with <a href="https://darksky.net/">DarkSky</a>!</li>
+<li>Location services with <a href="https://nominatim.openstreetmap.org/">Nominantim by OpenStreetMaps</a>!</li>
+<li>Datastore integration with <a href="https://redis.io/">Redis</a>!</li>
+<li>Deployable with <a href="https://www.docker.com/">Docker</a>!</li>
+</ul>
+<h2>
+<a id="features" class="anchor" href="#features" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Features</h2>
+<h3>
+<a id="weather" class="anchor" href="#weather" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Weather</h3>
+<p>This week's weather. This uses the user's saved location if they set one:</p>
+<p><img src="images/week_weather.png" alt="The week's weather"></p>
+<p>This week's weather at a given location (Coventry):</p>
+<p><img src="images/week_location_weather.png" alt="The week's weather at location"></p>
+<h3>
+<a id="location" class="anchor" href="#location" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Location</h3>
+<p>The bot can remember your location, resolve, and recite it:</p>
+<p><img src="images/location_datastore.png" alt="Remembering location"></p>
+<p>This automatically resolves the location's coordinates using <a href="https://nominatim.openstreetmap.org/">Nominantim</a>.</p>
+<h2>
+<a id="design" class="anchor" href="#design" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Design</h2>
+<p>As one of the more experienced members of the team, I set down the foundation for the bot's design and structure. At the time, we were unsure which platforms we wanted to target, so I set out by separating the platform-specific implementations from the platform-neutral services.</p>
+<p>I did this by putting all code that provided some kind of generic services into the <code>handlers</code> folder of the project. Here you can find a file called <code>services.py</code> which contains a class called <code>Service</code> that acts as a configurable base class. All other services in <code>handlers</code> inherits this <code>Service</code> class and implements its own functionality. For example, the <code>WeatherService</code> class in <code>weather.py</code> contains methods like <code>get_weather_at</code> that takes a given longitude and latitude and queries DarkSky's forecast API.</p>
+<p>The services can then be registered using the <code>register_service</code> decorator that can be found in <code>services.py</code>. The decorator takes the name of the service as a parameter, then resolves the config provided to that service with the same name detailed in <code>config.json</code>, and stores it in the dictionary <code>global_services</code>.</p>
+<p>For all the platform specific implementations, I put the code in the <code>wrappers</code> folder. This contains a file called <code>bot.py</code> which has a class <code>ChatBot</code>. This acts as an interface that defines common behaviours for every bot with methods such as <code>start</code> and <code>stop</code>, since the reasoning behind it was that every bot must at least start and be able to be stopped. At the moment, the only implemented platform is Discord, the code for which can be seen in <code>discord.py</code>. Here we can see the bot inherits <code>ChatBot</code>, implements the <code>start</code> method and defines its own. <code>ChatBot</code> also declares three class members:</p>
+<ul>
+<li>
+<code>services</code>: A dictionary containing instances of services for the bot to use.</li>
+<li>
+<code>datastore</code>: A Redis client object for the bot to access the datastore.</li>
+<li>
+<code>config</code>: A <code>ConfigDict</code> object that acts as a representation of the bot's config in <code>config.json</code> (see below).</li>
+</ul>
+<p>Both services and wrappers are configurable via the <code>config.json</code> file, which looks something like this:</p>
+<div class="highlight highlight-source-json"><pre>{
+    <span class="pl-s"><span class="pl-pds">"</span>discord<span class="pl-pds">"</span></span>: {
+        <span class="pl-s"><span class="pl-pds">"</span>token<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>&lt;DISCORD TOKEN HERE&gt;<span class="pl-pds">"</span></span>,
+        <span class="pl-s"><span class="pl-pds">"</span>services<span class="pl-pds">"</span></span>: [
+            <span class="pl-s"><span class="pl-pds">"</span>weather<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>location<span class="pl-pds">"</span></span>
+        ]
+    },
+    <span class="pl-s"><span class="pl-pds">"</span>services<span class="pl-pds">"</span></span>: {
+        <span class="pl-s"><span class="pl-pds">"</span>weather<span class="pl-pds">"</span></span>: {
+            <span class="pl-s"><span class="pl-pds">"</span>token<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>&lt;DARKSKY TOKEN HERE&gt;<span class="pl-pds">"</span></span>
+        }
+    },
+    <span class="pl-s"><span class="pl-pds">"</span>redis<span class="pl-pds">"</span></span>: {
+        <span class="pl-s"><span class="pl-pds">"</span>host<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>localhost<span class="pl-pds">"</span></span>,
+        <span class="pl-s"><span class="pl-pds">"</span>port<span class="pl-pds">"</span></span>: <span class="pl-c1">6379</span>
+    }
+}</pre></div>
+<p>This details that the Discord bot has a token and a set of services it can use. For this example, it can use the weather and location services. When we run the bot using the <code>run_discord.py</code> script, this passes the <code>discord</code> configuration to the <code>DiscordBot</code> class constructor, which in turn calls <code>ChatBot</code>'s constructor. If the optional parameter <code>services</code> is <code>None</code> then <code>ChatBot</code>'s constructor then will find the services listed in <code>config.json</code> from the <code>global_services</code> and store them in the <code>services</code> class member. This was my attempt to "inject" services into the bot automatically.</p>
+<p><code>DiscordBot</code> is currently the only functioning bot. It uses the <a href="https://github.com/Rapptz/discord.py">Discord.py</a> library which makes for easy integration with Discord's API.</p>
+<h2>
+<a id="development-process" class="anchor" href="#development-process" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Development Process</h2>
+<p>During the making of the this project, my team worked using Scrum methodologies and tracked user stories, features and tasks with an online Kanban/Scrum board provided by <a href="https://azure.microsoft.com/en-us/services/devops/?nav=min">Azure DevOps</a>. Sprints were one week in duration to match up with how our work was being marked and we estimated work before each sprint using and <a href="https://www.planningpoker.com/">PlanningPoker.com</a>.</p>
+<p><img src="images/azure_devops.png" alt="Azure DevOps Kanban"></p>
+<p>All code was to be hosted on Coventry University's GitHub server. The stable version of the project is hosted on my account, with the other members of my team having their own fork. This was done to enforce a policy of code merging via pull requests, rather than allowing every member to merge freely, as I thought this could create merge conflicts and become messy quickly.</p>
+<p>Setting up Azure DevOps, I noticed their Continuous Integration platform and thought it would be a good idea to have some kind of CI for this project. However, with Azure, it wanted us to move our repo from the university's GitHub which wasn't ideal. I have had experience with <a href="https://jenkins.io/">Jenkins</a> before and recalled setting it up on my home server, so I decided to try it out with this project and after much trial and error with Jenkin's pipeline syntax, I managed to get something working.</p>
+<p>Below is the current pipeline configuration. The idea here was to have one step for the building and testing of the project and the other for Docker building and deployment to a private registry also hosted on my home server.</p>
+<p><img src="images/jenkins.png" alt="Jenkins pipeline example"></p>
+<p>I used the webhook feature in GitHub so that Jenkins would be notified of new PRs, commits, and branches. This meant that Jenkins would automatically build and test the codebase as the repo was being updated. Jenkins is also able to inform GitHub of the outcome of the pipeline and display a green tick or red cross if the pipeline succeeded or failed respectively.</p>
+<p>Below is an example. Each commit with a green tick has been ran on Jenkins and passed all steps.</p>
+<p><img src="images/jenkins_integration_example.png" alt="Jenkins PR integration example"></p>
+<p><img src="images/jenkins_integration_example2.png" alt="Another Jenkins PR integration example"></p>
+<h2>
+<a id="reflection" class="anchor" href="#reflection" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Reflection</h2>
+<p>I think my design worked well for the most part. If we decided we wanted to integrate the bot into WhatsApp or Messenger, I feel that my design would aid in porting our features over to the new platform. This design also allows for multiple bots with similar features on the same platform, which I am happy with. I do however, believe that in some areas my code is poorly implemented, such as the <code>global_services</code> dictionary. This seems like a bit of a hack, and I feel I could have found a better way to inject services into the bots. That being said, this is the first time I've used a custom decorator in Python and I can see its potential elsewhere.</p>
+<p>The <code>global_config</code> object in <code>config.py</code> is also a bit of a bad design in my opinion, but was required to configure <code>global_services</code>. My idea with configuration was to have it being passed around to objects that needed it, but instead I have a mix of two ideas: one where the config is passed around and one where it can be accessed globally.</p>
+<p>I am happy with the <a href="https://redis.io/">Redis</a> integration as this was my first time trying out a NoSQL solution. I feel that its simplicity made it easier to work with than your traditional SQL solution, which would require the creation and management of tables and schemata. If we did go with an SQL solution, I think the use of an ORM (Object-Relational Mapping) framework such as <a href="https://www.sqlalchemy.org/">SQLAlchemy</a> would've kept the team efficient.</p>
+<p>I also wished I spent more time working on refining and creating features to give the bot much more personality. But as I whole, I am happy with the outcome.</p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.coventry.ac.uk/soperd/chatbot">chatbot</a> is maintained by <a href="https://github.coventry.ac.uk/soperd">soperd</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>

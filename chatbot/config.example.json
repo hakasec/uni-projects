@@ -1,0 +1,15 @@
+{
+    "discord": {
+        "token": "TOKEN_HERE",
+        "services": ["SERVICE_1", "SERVICE_2"]
+    },
+    "services": {
+        "SERVICE_1": {
+            "token": "SERVICE_TOKEN"
+        }
+    },
+    "redis": {
+        "host": "localhost",
+        "port": 6379
+    }
+}

@@ -1,0 +1,4 @@
+# any hidden folder or file
+.*
+
+config.json

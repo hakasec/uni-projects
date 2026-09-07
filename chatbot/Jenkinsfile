@@ -1,0 +1,26 @@
+node {
+    checkout scm
+
+    stage('Build and Test') {
+        docker.image('redis:alpine').withRun { c ->
+            docker.image('python:3.5').inside(
+                "-e HOME=${env.WORKSPACE} --network container:${c.id}") {
+                withCredentials([file(credentialsId: 'ChatbotConfig',
+                                      variable: 'FILE')]) {
+                    sh 'mv $FILE config.json'
+                    sh 'pip install --user -r requirements.txt'
+                    sh 'python -m unittest discover -p "*_test.py"'               
+                }
+            }
+        }
+    }
+
+    stage('Docker') {
+        def REGISTRY_URL = 'registry.declansoper.xyz'
+        def REGISTRY_PROTO = 'https'
+        docker.withRegistry("${REGISTRY_PROTO}://${REGISTRY_URL}/", 'DockerRegistry') {
+            def image = docker.build("${REGISTRY_URL}/chatbot:${env.BRANCH_NAME}")
+            image.push()
+        }
+    }
+}

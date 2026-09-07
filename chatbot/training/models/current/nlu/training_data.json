@@ -1,0 +1,247 @@
+{
+  "rasa_nlu_data": {
+    "entity_synonyms": [],
+    "common_examples": [
+      {
+        "intent": "get_weather",
+        "entities": [
+          {
+            "start": 24,
+            "end": 29,
+            "entity": "day",
+            "value": "today"
+          }
+        ],
+        "text": "what's the weather like today"
+      },
+      {
+        "intent": "get_weather",
+        "entities": [
+          {
+            "start": 30,
+            "end": 38,
+            "entity": "day",
+            "value": "tomorrow"
+          }
+        ],
+        "text": "what will the weather be like tomorrow"
+      },
+      {
+        "intent": "get_weather",
+        "entities": [
+          {
+            "start": 28,
+            "end": 36,
+            "entity": "location",
+            "value": "Coventry"
+          }
+        ],
+        "text": "what is the weather like in Coventry"
+      },
+      {
+        "intent": "get_weather",
+        "entities": [
+          {
+            "start": 27,
+            "end": 32,
+            "entity": "location",
+            "value": "Tokyo"
+          }
+        ],
+        "text": "what's the weather like in Tokyo"
+      },
+      {
+        "intent": "get_weather",
+        "entities": [
+          {
+            "start": 27,
+            "end": 35,
+            "entity": "location",
+            "value": "Coventry"
+          },
+          {
+            "start": 36,
+            "end": 44,
+            "entity": "day",
+            "value": "tomorrow"
+          }
+        ],
+        "text": "what's the weather like in Coventry tomorrow"
+      },
+      {
+        "intent": "get_weather",
+        "entities": [
+          {
+            "start": 27,
+            "end": 33,
+            "entity": "location",
+            "value": "Oxford"
+          },
+          {
+            "start": 37,
+            "end": 41,
+            "entity": "time",
+            "value": "10am"
+          }
+        ],
+        "text": "what's the weather like in Oxford at 10am"
+      },
+      {
+        "intent": "get_weather",
+        "entities": [
+          {
+            "start": 27,
+            "end": 30,
+            "entity": "time",
+            "value": "8pm"
+          }
+        ],
+        "text": "what's the weather like at 8pm"
+      },
+      {
+        "intent": "get_weather",
+        "entities": [
+          {
+            "start": 27,
+            "end": 33,
+            "entity": "day",
+            "value": "Monday"
+          }
+        ],
+        "text": "what's the weather like on Monday"
+      },
+      {
+        "intent": "get_weather",
+        "entities": [
+          {
+            "start": 29,
+            "end": 33,
+            "entity": "period",
+            "value": "week"
+          }
+        ],
+        "text": "what's the weather like this week"
+      },
+      {
+        "intent": "get_weather",
+        "entities": [
+          {
+            "start": 29,
+            "end": 33,
+            "entity": "period",
+            "value": "week"
+          },
+          {
+            "start": 37,
+            "end": 43,
+            "entity": "location",
+            "value": "Oxford"
+          }
+        ],
+        "text": "what's the weather like this week in Oxford"
+      },
+      {
+        "intent": "remember_location",
+        "entities": [
+          {
+            "start": 24,
+            "end": 34,
+            "entity": "location",
+            "value": "Birmingham"
+          }
+        ],
+        "text": "remember my location is Birmingham"
+      },
+      {
+        "intent": "remember_location",
+        "entities": [
+          {
+            "start": 24,
+            "end": 32,
+            "entity": "location",
+            "value": "Coventry"
+          }
+        ],
+        "text": "remember that I live in Coventry"
+      },
+      {
+        "intent": "remember_location",
+        "entities": [
+          {
+            "start": 24,
+            "end": 39,
+            "entity": "location",
+            "value": "Chipping Norton"
+          }
+        ],
+        "text": "remember that I live in Chipping Norton"
+      },
+      {
+        "intent": "recite_location",
+        "text": "where do I live?"
+      },
+      {
+        "intent": "recite_location",
+        "text": "what's my location?"
+      },
+      {
+        "intent": "greet",
+        "text": "hello"
+      },
+      {
+        "intent": "greet",
+        "text": "hey"
+      },
+      {
+        "intent": "greet",
+        "text": "heya"
+      },
+      {
+        "intent": "greet",
+        "text": "hiya"
+      },
+      {
+        "intent": "greet",
+        "text": "how are you?"
+      },
+      {
+        "intent": "yes_no_answer",
+        "text": "yes"
+      },
+      {
+        "intent": "yes_no_answer",
+        "text": "yeah"
+      },
+      {
+        "intent": "yes_no_answer",
+        "text": "yeh"
+      },
+      {
+        "intent": "yes_no_answer",
+        "text": "ye"
+      },
+      {
+        "intent": "yes_no_answer",
+        "text": "y"
+      },
+      {
+        "intent": "yes_no_answer",
+        "text": "no"
+      },
+      {
+        "intent": "yes_no_answer",
+        "text": "nah"
+      },
+      {
+        "intent": "yes_no_answer",
+        "text": "na"
+      },
+      {
+        "intent": "yes_no_answer",
+        "text": "n"
+      }
+    ],
+    "lookup_tables": [],
+    "regex_features": []
+  }
+}
